@@ -1,7 +1,7 @@
 ---
 - name: install http on remote servers
-  hosts: test-servers
-  remote_user: nahmed
+  hosts: all
+  remote_user: ansible
   become: true
   vars:
     project_root: /var/www/html
