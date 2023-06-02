@@ -15,5 +15,6 @@
     - name: Restart a service
       win_service:
         name: spooler
+        start_mode: auto
         state: restarted
 
