@@ -15,5 +15,4 @@
       win_service:
         name: spooler
         start_mode: auto
-        state: restarted
-
+        state: stopped
