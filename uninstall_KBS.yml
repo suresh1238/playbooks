@@ -1,14 +1,14 @@
 ---
 - name: Uninstall KB from Windows Server
-  hosts: all
+  hosts: windows_servers
   gather_facts: false
 
   tasks:
     - name: Uninstall KB
-      win_updates:
-        category_names:
-          - SecurityUpdates
-          - CriticalUpdates
-        state: absent
-        hotfix_id: "{{ KB5026362,kb5026363}}"
+      win_shell: |
+        $kbNumber = "{{ KB5026362,kb5026363}}"
+        $uninstallCommand = "wusa /uninstall /kb:$kbNumber /quiet /norestart"
+        $result = Invoke-Expression -Command $uninstallCommand
+        $result
       register: uninstall_result
+
