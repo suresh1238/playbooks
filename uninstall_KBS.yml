@@ -1,14 +1,18 @@
 ---
 - name: Uninstall KB from Windows Server
   hosts: all
-  gather_facts: false
+  gather_facts: yes
 
   tasks:
     - name: Uninstall KB
       win_shell: |
         $kbNumber = "{{ KB5026362 }}"
-        $uninstallCommand = "wusa /uninstall /kb:$kbNumber /quiet /norestart"
+        $uninstallCommand = "wmic qfe where HotfixID='$kbNumber' call uninstall /quiet"
         $result = Invoke-Expression -Command $uninstallCommand
         $result
       register: uninstall_result
 
+    - name: Generate CSV report template
+      template:
+        src: uninstall_report.j2
+        dest: "C:\\temp\\uninstall_report.csv"
