@@ -1,6 +1,6 @@
 ---
 - name: Uninstall KB from Windows Server
-  hosts: windows_servers
+  hosts: all
   gather_facts: false
 
   tasks:
