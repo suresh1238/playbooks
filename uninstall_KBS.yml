@@ -12,20 +12,3 @@
         state: absent
         hotfix_id: "{{ KB5026362,kb5026363}}"
       register: uninstall_result
-
-    - name: Generate CSV report
-      win_csv:
-        path: "C:\\temp\\uninstall_report.csv"
-        data:
-          - Update Name
-          - Result
-          - Reboot Required
-          - Installed On
-        append: false
-        delimiter: ","
-        content: |
-          "{{ kb_number }}",
-          "{{ uninstall_result.results[0].update_title }}",
-          "{{ uninstall_result.results[0].changed }}",
-          "{{ uninstall_result.results[0].reboot_required }}",
-          "{{ uninstall_result.results[0].install_date }}"
