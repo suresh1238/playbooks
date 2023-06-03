@@ -15,7 +15,7 @@
 
     - name: Set Product ID fact
       set_fact:
-        product_id: "{{ product_id_output.stdout_lines[0].split("=")[1].strip() }}"
+        product_id: "{{ product_id_output.stdout | regex_search('IdentifyingNumber=(.*)', '\\1') | trim }}"
 
     - name: Uninstall KB
       win_package:
