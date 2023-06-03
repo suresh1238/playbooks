@@ -6,7 +6,7 @@
   tasks:
     - name: Uninstall KB
       win_shell: |
-        $kbNumber = "{{ KB5026362}}"
+        $kbNumber = "{{ KB5026362 }}"
         $uninstallCommand = "wusa /uninstall /kb:$kbNumber /quiet /norestart"
         $result = Invoke-Expression -Command $uninstallCommand
         $result
