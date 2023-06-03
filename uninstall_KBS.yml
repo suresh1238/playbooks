@@ -1,21 +1,23 @@
 ---
 - name: Uninstall KB from Windows Server
-  hosts: all
+  hosts: windows_servers
   gather_facts: false
 
   vars:
     kb_number: "KB5026362"
 
   tasks:
-    - name: Get Product ID
-      win_shell: 'wmic qfe where HotfixID="{{ kb_number }}" get IdentifyingNumber /value'
-      register: product_id_output
-      changed_when: false
-      failed_when: product_id_output.rc != 0 or "IdentifyingNumber" not in product_id_output.stdout
+    - name: Search for installed KB
+      win_updates:
+        category_names:
+          - SecurityUpdates
+          - CriticalUpdates
+        action: search
+      register: installed_updates
 
-    - name: Set Product ID fact
+    - name: Get Product ID
       set_fact:
-        product_id: "{{ product_id_output.stdout | regex_search('IdentifyingNumber=(.*)', '\\1') | trim }}"
+        product_id: "{{ installed_updates.updates | selectattr('kb', 'match', kb_number) | map(attribute='update_id') | first }}"
 
     - name: Uninstall KB
       win_package:
@@ -26,3 +28,4 @@
       template:
         src: uninstall_report.j2
         dest: "C:\\temp\\uninstall_report.csv"
+
