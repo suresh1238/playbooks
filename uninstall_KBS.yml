@@ -8,11 +8,9 @@
 
   tasks:
     - name: Uninstall KB
-      win_shell: |
-        $kbNumber = "{{ kb_number }}"
-        $uninstallCommand = "wmic qfe where HotfixID='$kbNumber' call uninstall /quiet"
-        $result = Invoke-Expression -Command $uninstallCommand
-        $result
+      win_package:
+        name: "{{ kb_number }}"
+        state: absent
       register: uninstall_result
 
     - name: Generate CSV report template
