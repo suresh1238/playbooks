@@ -1,12 +1,15 @@
 ---
 - name: Uninstall KB from Windows Server
   hosts: all
-  gather_facts: yes
+  gather_facts: false
+
+  vars:
+    kb_number: "KB5026362"
 
   tasks:
     - name: Uninstall KB
       win_shell: |
-        $kbNumber = "{{ KB5026362 }}"
+        $kbNumber = "{{ kb_number }}"
         $uninstallCommand = "wmic qfe where HotfixID='$kbNumber' call uninstall /quiet"
         $result = Invoke-Expression -Command $uninstallCommand
         $result
