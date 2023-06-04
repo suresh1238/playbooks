@@ -1,5 +1,5 @@
 ---
-- name: Uninstall Installed KBs in Winodws serverless:
+- name: Uninstall Installed KBs in Winodws servers
  hosts: all
  tasks:
  ansible.windows.win_updates:
