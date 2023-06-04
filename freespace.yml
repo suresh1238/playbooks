@@ -11,3 +11,7 @@
       debug:
         msg: |
           "{{ freespace.stdout }} GB"
+    - name: fail if there is not enough space
+      fail:
+        msg: "VM  has not enough space"
+      when: "{{freespace.stdout | int < 20}}
