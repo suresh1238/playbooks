@@ -1,8 +1,8 @@
 ---
 - name: Uninstall Installed KBs in Winodws servers
- hosts: all
- tasks:
- ansible.windows.win_updates:
+  hosts: all
+  tasks:
+   ansible.windows.win_updates:
     category_names:
       - SecurityUpdates
       - CriticalUpdates
